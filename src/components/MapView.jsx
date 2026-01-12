@@ -14,17 +14,17 @@ const METRICS = {
 };
 
 const METRIC_LABELS = {
-  [METRICS.PRODUCTION]: 'Production',
-  [METRICS.REFINING]: 'Refining Capacity',
-  [METRICS.CONSUMPTION]: 'Consumption',
-  [METRICS.RESERVES]: 'Reserves'
+  [METRICS.PRODUCTION]: 'PRODUCTION',
+  [METRICS.REFINING]: 'REFINING',
+  [METRICS.CONSUMPTION]: 'CONSUMPTION',
+  [METRICS.RESERVES]: 'RESERVES'
 };
 
 const METRIC_COLORS = {
-  [METRICS.PRODUCTION]: '#3B82F6',
-  [METRICS.REFINING]: '#8B5CF6',
-  [METRICS.CONSUMPTION]: '#10B981',
-  [METRICS.RESERVES]: '#F59E0B'
+  [METRICS.PRODUCTION]: '#00FF00',
+  [METRICS.REFINING]: '#FFAA00',
+  [METRICS.CONSUMPTION]: '#00FFFF',
+  [METRICS.RESERVES]: '#00FF00'
 };
 
 export default function MapView() {
@@ -87,23 +87,24 @@ export default function MapView() {
   ];
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col font-mono">
       {/* Controls */}
-      <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+      <div className="bg-black px-4 py-3 flex items-center justify-between border-b-2 border-terminal-green" style={{boxShadow: '0 0 10px rgba(0, 255, 0, 0.3)'}}>
         <div className="flex items-center gap-4">
           {/* Metric selector */}
           <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-sm">Show:</span>
+            <span className="text-terminal-green-dim text-sm uppercase tracking-wide">&gt; DISPLAY:</span>
             <div className="flex gap-1">
               {Object.entries(METRICS).map(([key, value]) => (
                 <button
                   key={key}
                   onClick={() => setActiveMetric(value)}
-                  className={`px-3 py-1 text-sm rounded transition-colors ${
+                  className={`px-3 py-1 text-sm transition-colors uppercase tracking-wide ${
                     activeMetric === value
-                      ? 'bg-amber-600 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                      ? 'bg-terminal-green text-black font-bold border-2 border-terminal-green'
+                      : 'bg-black text-terminal-green border-2 border-terminal-green-dark hover:bg-terminal-green-dark'
                   }`}
+                  style={activeMetric === value ? {boxShadow: '0 0 10px rgba(0, 255, 0, 0.5)'} : {}}
                 >
                   {METRIC_LABELS[value]}
                 </button>
@@ -119,7 +120,7 @@ export default function MapView() {
               onChange={(e) => setShowChokepoints(e.target.checked)}
               className="rounded"
             />
-            <span className="text-gray-300">Chokepoints</span>
+            <span className="text-terminal-green uppercase tracking-wide">CRITICAL ZONES</span>
           </label>
 
           <label className="flex items-center gap-2 text-sm cursor-pointer">
@@ -129,7 +130,7 @@ export default function MapView() {
               onChange={(e) => setShowTradeRoutes(e.target.checked)}
               className="rounded"
             />
-            <span className="text-gray-300">Trade Routes</span>
+            <span className="text-terminal-green uppercase tracking-wide">SUPPLY ROUTES</span>
           </label>
         </div>
 
@@ -145,7 +146,7 @@ export default function MapView() {
           zoom={2}
           minZoom={2}
           maxZoom={6}
-          style={{ height: '100%', width: '100%', background: '#1f2937' }}
+          style={{ height: '100%', width: '100%', background: '#000000' }}
           worldCopyJump={true}
         >
           <TileLayer
@@ -228,10 +229,10 @@ export default function MapView() {
               key={cp.id}
               center={cp.coordinates}
               radius={8}
-              fillColor="#EF4444"
+              fillColor="#FF0000"
               fillOpacity={0.9}
-              color="#FFFFFF"
-              weight={2}
+              color="#00FF00"
+              weight={3}
             >
               <Popup>
                 <div className="p-1 min-w-[200px]">
@@ -266,11 +267,11 @@ export default function MapView() {
       </div>
 
       {/* Bottom panel with chokepoint summary */}
-      <div className="bg-gray-800 px-4 py-3 border-t border-gray-700">
+      <div className="bg-black px-4 py-3 border-t-2 border-terminal-green" style={{boxShadow: '0 0 10px rgba(0, 255, 0, 0.3)'}}>
         <div className="flex items-center justify-between">
           <ChokepointLegend />
-          <div className="text-xs text-gray-400">
-            Click markers for details | Scroll to zoom | Drag to pan
+          <div className="text-xs text-terminal-green-dim uppercase tracking-wide">
+            &gt; CLICK MARKERS FOR INTEL | SCROLL: ZOOM | DRAG: PAN
           </div>
         </div>
       </div>

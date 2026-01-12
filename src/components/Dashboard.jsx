@@ -16,46 +16,46 @@ export default function Dashboard() {
   const globalTotals = getGlobalTotals();
 
   const tabs = [
-    { id: VIEWS.SANKEY, label: 'Oil Flow Sankey', icon: '⚡' },
-    { id: VIEWS.MAP, label: 'World Map', icon: '🌍' },
-    { id: VIEWS.VULNERABILITY, label: 'Vulnerability Analysis', icon: '⚠️' }
+    { id: VIEWS.SANKEY, label: 'RESOURCE FLOW', icon: '▓' },
+    { id: VIEWS.MAP, label: 'TACTICAL MAP', icon: '▒' },
+    { id: VIEWS.VULNERABILITY, label: 'THREAT ANALYSIS', icon: '█' }
   ];
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen font-mono">
       {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4">
+      <header className="bg-black border-b-2 border-terminal-green px-6 py-4" style={{boxShadow: '0 0 10px rgba(0, 255, 0, 0.3)'}}>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white">
-              Global Oil Flow Dashboard
+            <h1 className="text-2xl font-bold text-terminal-green tracking-wider">
+              ▓▓▓ WOPR STRATEGIC RESOURCE CONTROL ▓▓▓
             </h1>
-            <p className="text-gray-400 text-sm mt-1">
-              Reserves, Production, Refining & Consumption Analysis
+            <p className="text-terminal-green-dim text-sm mt-1 tracking-wide">
+              &gt; GLOBAL SUPPLY CHAIN MONITORING SYSTEM v2.1
             </p>
           </div>
           <div className="flex gap-6 text-sm">
             <div className="text-center">
-              <div className="text-gray-400">Global Reserves</div>
-              <div className="text-amber-400 font-semibold">
+              <div className="text-terminal-green-dim uppercase text-xs tracking-wider">RESERVES</div>
+              <div className="text-terminal-blue font-bold tracking-wide">
                 {formatOilValue(globalTotals.reserves, 'reserves')}
               </div>
             </div>
             <div className="text-center">
-              <div className="text-gray-400">Daily Production</div>
-              <div className="text-blue-400 font-semibold">
+              <div className="text-terminal-green-dim uppercase text-xs tracking-wider">PRODUCTION</div>
+              <div className="text-terminal-green font-bold tracking-wide">
                 {formatOilValue(globalTotals.production, 'production')}
               </div>
             </div>
             <div className="text-center">
-              <div className="text-gray-400">Refining Capacity</div>
-              <div className="text-purple-400 font-semibold">
+              <div className="text-terminal-green-dim uppercase text-xs tracking-wider">REFINING</div>
+              <div className="text-terminal-amber font-bold tracking-wide">
                 {formatOilValue(globalTotals.refiningCapacity, 'refining')}
               </div>
             </div>
             <div className="text-center">
-              <div className="text-gray-400">Daily Consumption</div>
-              <div className="text-green-400 font-semibold">
+              <div className="text-terminal-green-dim uppercase text-xs tracking-wider">CONSUMPTION</div>
+              <div className="text-terminal-green font-bold tracking-wide">
                 {formatOilValue(globalTotals.consumption, 'consumption')}
               </div>
             </div>
@@ -85,13 +85,13 @@ export default function Dashboard() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 border-t border-gray-700 px-6 py-2 text-xs text-gray-500">
-        <div className="flex justify-between">
+      <footer className="bg-black border-t-2 border-terminal-green px-6 py-2 text-xs text-terminal-green-dim font-mono" style={{boxShadow: '0 0 10px rgba(0, 255, 0, 0.3)'}}>
+        <div className="flex justify-between tracking-wide">
           <span>
-            Data sources: BP Statistical Review 2024, OPEC, EIA, Oil & Gas Journal
+            &gt; DATA SOURCES: BP STATISTICAL REVIEW 2024, OPEC, EIA, OIL & GAS JOURNAL
           </span>
           <span>
-            Hover over elements for detailed citations
+            &gt; SYSTEM STATUS: OPERATIONAL | LAST UPDATE: {new Date().toLocaleTimeString()}
           </span>
         </div>
       </footer>

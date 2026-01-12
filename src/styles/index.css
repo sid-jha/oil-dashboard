@@ -3,152 +3,241 @@
 @tailwind utilities;
 
 :root {
-  --region-middle-east: #D97706;
-  --region-americas: #2563EB;
-  --region-europe: #7C3AED;
-  --region-asia-pacific: #059669;
-  --region-africa: #DC2626;
+  /* War Games tactical color scheme */
+  --region-middle-east: #00FF00;
+  --region-americas: #00FFFF;
+  --region-europe: #FFAA00;
+  --region-asia-pacific: #00FF00;
+  --region-africa: #FF0000;
+  --terminal-glow: 0 0 5px #00FF00, 0 0 10px #00FF00;
+  --terminal-glow-strong: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
 }
 
+/* CRT Screen Effect */
 body {
-  @apply bg-gray-900 text-gray-100;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  @apply bg-black text-terminal-green;
+  font-family: 'Courier New', 'Courier', monospace;
+  background: radial-gradient(ellipse at center, #0A0A0A 0%, #000000 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Sankey Diagram Styles */
+/* CRT Screen Curvature and Scanlines */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanline 8s linear infinite;
+}
+
+/* CRT Flicker Effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 9998;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+/* Terminal Text Glow */
+* {
+  text-shadow: var(--terminal-glow);
+}
+
+/* Sankey Diagram Styles - War Games */
 .sankey-node rect {
   cursor: pointer;
   transition: opacity 0.2s;
+  filter: drop-shadow(0 0 3px currentColor);
 }
 
 .sankey-node rect:hover {
   opacity: 0.8;
+  filter: drop-shadow(0 0 8px currentColor);
 }
 
 .sankey-link {
   fill: none;
-  stroke-opacity: 0.4;
+  stroke-opacity: 0.5;
   transition: stroke-opacity 0.2s;
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
 .sankey-link:hover {
-  stroke-opacity: 0.7;
+  stroke-opacity: 0.9;
+  filter: drop-shadow(0 0 5px currentColor);
 }
 
 .sankey-node text {
   font-size: 11px;
-  fill: #e5e7eb;
+  font-family: 'Courier New', monospace;
+  fill: #00FF00;
+  text-shadow: 0 0 5px #00FF00;
 }
 
-/* Tooltip Styles */
+/* Tooltip Styles - War Games Terminal */
 .tooltip {
-  @apply absolute bg-gray-800 border border-gray-600 rounded-lg shadow-xl p-3 z-50 pointer-events-none;
+  @apply absolute bg-black border-2 border-terminal-green p-3 z-50 pointer-events-none;
   max-width: 300px;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 10px #00FF00, inset 0 0 10px rgba(0, 255, 0, 0.1);
 }
 
 .tooltip-title {
-  @apply font-semibold text-white mb-1;
+  @apply font-bold text-terminal-green mb-1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .tooltip-value {
-  @apply text-lg font-bold text-amber-400;
+  @apply text-lg font-bold text-terminal-blue;
+  text-shadow: var(--terminal-glow-strong);
 }
 
 .tooltip-citation {
-  @apply text-xs text-gray-400 mt-2 italic;
+  @apply text-xs text-terminal-green-dim mt-2;
 }
 
-/* Map Styles */
+/* Map Styles - War Games Tactical Display */
 .leaflet-container {
-  @apply bg-gray-900;
+  @apply bg-black;
   height: 100%;
   width: 100%;
+  filter: brightness(0.9) contrast(1.2);
 }
 
 .chokepoint-marker {
-  @apply bg-red-500 border-2 border-white rounded-full;
+  @apply bg-terminal-red border-2 border-terminal-green rounded-full;
   width: 12px;
   height: 12px;
+  box-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
 }
 
 .chokepoint-label {
-  @apply bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap;
+  @apply bg-black text-terminal-green text-xs px-2 py-1 whitespace-nowrap;
+  border: 1px solid #00FF00;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 5px #00FF00;
 }
 
-/* Vulnerability Table */
+/* Vulnerability Table - War Games Terminal */
 .vulnerability-table {
   @apply w-full text-sm;
+  font-family: 'Courier New', monospace;
 }
 
 .vulnerability-table th {
-  @apply bg-gray-800 text-left px-4 py-3 font-semibold text-gray-300 cursor-pointer;
+  @apply bg-black text-left px-4 py-3 font-bold text-terminal-green cursor-pointer;
+  border: 1px solid #00FF00;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .vulnerability-table th:hover {
-  @apply bg-gray-700;
+  @apply bg-terminal-green-dark;
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .vulnerability-table td {
-  @apply px-4 py-3 border-b border-gray-700;
+  @apply px-4 py-3 border-b text-terminal-green;
+  border-color: #008800;
 }
 
 .vulnerability-score {
   @apply font-bold;
+  text-shadow: 0 0 5px currentColor;
 }
 
 .score-critical {
-  @apply text-red-400;
+  @apply text-terminal-red;
 }
 
 .score-high {
-  @apply text-orange-400;
+  @apply text-terminal-amber;
 }
 
 .score-medium {
-  @apply text-yellow-400;
+  color: #FFFF00;
 }
 
 .score-low {
-  @apply text-green-400;
+  @apply text-terminal-green;
 }
 
-/* Disruption Simulator */
+/* Disruption Simulator - War Games */
 .region-toggle {
-  @apply flex items-center justify-between p-3 bg-gray-800 rounded-lg cursor-pointer transition-colors;
+  @apply flex items-center justify-between p-3 bg-black cursor-pointer transition-colors;
+  border: 1px solid #00FF00;
+  font-family: 'Courier New', monospace;
 }
 
 .region-toggle:hover {
-  @apply bg-gray-700;
+  @apply bg-terminal-green-dark;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .region-toggle.disabled {
-  @apply bg-red-900/30 border border-red-500/50;
+  @apply bg-black border-terminal-red;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  color: #FF0000;
 }
 
 .region-toggle input[type="checkbox"] {
-  @apply w-5 h-5 rounded;
+  @apply w-5 h-5;
+  filter: hue-rotate(120deg) brightness(1.5);
 }
 
-/* Navigation Tabs */
+/* Navigation Tabs - War Games */
 .nav-tab {
-  @apply px-6 py-3 font-medium text-gray-400 border-b-2 border-transparent transition-colors;
+  @apply px-6 py-3 font-bold text-terminal-green-dim border-b-2 border-transparent transition-colors;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .nav-tab:hover {
-  @apply text-gray-200;
+  @apply text-terminal-green;
+  text-shadow: var(--terminal-glow-strong);
 }
 
 .nav-tab.active {
-  @apply text-amber-400 border-amber-400;
+  @apply text-terminal-blue border-terminal-blue;
+  text-shadow: var(--terminal-glow-strong);
 }
 
-/* Legend */
+/* Legend - War Games */
 .legend-item {
   @apply flex items-center gap-2 text-sm;
+  font-family: 'Courier New', monospace;
 }
 
 .legend-color {
-  @apply w-4 h-4 rounded;
+  @apply w-4 h-4;
+  box-shadow: 0 0 5px currentColor;
 }
 
 /* Sparkline */
@@ -156,22 +245,26 @@ body {
   stroke: currentColor;
   stroke-width: 1.5;
   fill: none;
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Terminal Theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-800;
+  @apply bg-black;
+  border: 1px solid #008800;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-600 rounded;
+  @apply bg-terminal-green-dark;
+  border: 1px solid #00FF00;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500;
+  @apply bg-terminal-green;
+  box-shadow: 0 0 5px #00FF00;
 }
