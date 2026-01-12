@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --region-middle-east: #D97706;
+  --region-americas: #2563EB;
+  --region-europe: #7C3AED;
+  --region-asia-pacific: #059669;
+  --region-africa: #DC2626;
+}
+
+body {
+  @apply bg-gray-900 text-gray-100;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Sankey Diagram Styles */
+.sankey-node rect {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.sankey-node rect:hover {
+  opacity: 0.8;
+}
+
+.sankey-link {
+  fill: none;
+  stroke-opacity: 0.4;
+  transition: stroke-opacity 0.2s;
+}
+
+.sankey-link:hover {
+  stroke-opacity: 0.7;
+}
+
+.sankey-node text {
+  font-size: 11px;
+  fill: #e5e7eb;
+}
+
+/* Tooltip Styles */
+.tooltip {
+  @apply absolute bg-gray-800 border border-gray-600 rounded-lg shadow-xl p-3 z-50 pointer-events-none;
+  max-width: 300px;
+}
+
+.tooltip-title {
+  @apply font-semibold text-white mb-1;
+}
+
+.tooltip-value {
+  @apply text-lg font-bold text-amber-400;
+}
+
+.tooltip-citation {
+  @apply text-xs text-gray-400 mt-2 italic;
+}
+
+/* Map Styles */
+.leaflet-container {
+  @apply bg-gray-900;
+  height: 100%;
+  width: 100%;
+}
+
+.chokepoint-marker {
+  @apply bg-red-500 border-2 border-white rounded-full;
+  width: 12px;
+  height: 12px;
+}
+
+.chokepoint-label {
+  @apply bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap;
+}
+
+/* Vulnerability Table */
+.vulnerability-table {
+  @apply w-full text-sm;
+}
+
+.vulnerability-table th {
+  @apply bg-gray-800 text-left px-4 py-3 font-semibold text-gray-300 cursor-pointer;
+}
+
+.vulnerability-table th:hover {
+  @apply bg-gray-700;
+}
+
+.vulnerability-table td {
+  @apply px-4 py-3 border-b border-gray-700;
+}
+
+.vulnerability-score {
+  @apply font-bold;
+}
+
+.score-critical {
+  @apply text-red-400;
+}
+
+.score-high {
+  @apply text-orange-400;
+}
+
+.score-medium {
+  @apply text-yellow-400;
+}
+
+.score-low {
+  @apply text-green-400;
+}
+
+/* Disruption Simulator */
+.region-toggle {
+  @apply flex items-center justify-between p-3 bg-gray-800 rounded-lg cursor-pointer transition-colors;
+}
+
+.region-toggle:hover {
+  @apply bg-gray-700;
+}
+
+.region-toggle.disabled {
+  @apply bg-red-900/30 border border-red-500/50;
+}
+
+.region-toggle input[type="checkbox"] {
+  @apply w-5 h-5 rounded;
+}
+
+/* Navigation Tabs */
+.nav-tab {
+  @apply px-6 py-3 font-medium text-gray-400 border-b-2 border-transparent transition-colors;
+}
+
+.nav-tab:hover {
+  @apply text-gray-200;
+}
+
+.nav-tab.active {
+  @apply text-amber-400 border-amber-400;
+}
+
+/* Legend */
+.legend-item {
+  @apply flex items-center gap-2 text-sm;
+}
+
+.legend-color {
+  @apply w-4 h-4 rounded;
+}
+
+/* Sparkline */
+.sparkline {
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
