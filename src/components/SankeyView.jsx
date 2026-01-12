@@ -86,8 +86,8 @@ export default function SankeyView() {
       .attr('height', d => Math.max(1, d.y1 - d.y0))
       .attr('width', d => d.x1 - d.x0)
       .attr('fill', d => d.color || getRegionColor(d.region || 'Other'))
-      .attr('stroke', '#1f2937')
-      .attr('stroke-width', 1)
+      .attr('stroke', '#00FF00')
+      .attr('stroke-width', 2)
       .style('cursor', d => viewMode === 'region' && d.layer === 0 ? 'pointer' : 'default')
       .on('click', function(event, d) {
         if (viewMode === 'region' && d.region && d.layer !== undefined) {
@@ -127,8 +127,8 @@ export default function SankeyView() {
         return d.name.length > maxLen ? d.name.substring(0, maxLen) + '...' : d.name;
       });
 
-    // Stage labels
-    const stages = ['Reserves', 'Production', 'Refining', 'Consumption'];
+    // Stage labels - War Games style
+    const stages = ['[RESERVES]', '[PRODUCTION]', '[REFINING]', '[CONSUMPTION]'];
     const stageX = [80, width * 0.33, width * 0.66, width - 80];
 
     svg.append('g')
@@ -138,8 +138,10 @@ export default function SankeyView() {
       .attr('x', (d, i) => stageX[i])
       .attr('y', 15)
       .attr('text-anchor', 'middle')
-      .attr('class', 'text-sm font-semibold')
-      .style('fill', '#9ca3af')
+      .attr('class', 'text-sm font-bold')
+      .style('fill', '#00FF00')
+      .style('font-family', 'Courier New, monospace')
+      .style('letter-spacing', '2px')
       .text(d => d);
 
   }, [viewMode, selectedRegion]);
@@ -150,22 +152,23 @@ export default function SankeyView() {
   };
 
   return (
-    <div className="h-full flex flex-col p-4" ref={containerRef}>
+    <div className="h-full flex flex-col p-4 font-mono" ref={containerRef}>
       {/* Controls */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           {viewMode === 'country' && (
             <button
               onClick={handleBackToRegions}
-              className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm flex items-center gap-2"
+              className="px-3 py-1 bg-black border-2 border-terminal-green hover:bg-terminal-green-dark text-terminal-green text-sm flex items-center gap-2 uppercase tracking-wide"
+              style={{boxShadow: '0 0 5px rgba(0, 255, 0, 0.5)'}}
             >
-              ← Back to Regions
+              &lt; BACK TO REGIONS
             </button>
           )}
-          <span className="text-gray-400 text-sm">
+          <span className="text-terminal-green-dim text-sm uppercase tracking-wide">
             {viewMode === 'region'
-              ? 'Click a region to drill down to individual countries'
-              : `Showing countries in ${selectedRegion}`}
+              ? '&gt; CLICK REGION FOR COUNTRY DETAIL'
+              : `&gt; SECTOR: ${selectedRegion.toUpperCase()}`}
           </span>
         </div>
         <div className="flex items-center gap-4">
@@ -174,7 +177,7 @@ export default function SankeyView() {
       </div>
 
       {/* Sankey Diagram */}
-      <div className="flex-1 bg-gray-800 rounded-lg overflow-hidden">
+      <div className="flex-1 bg-black border-2 border-terminal-green overflow-hidden" style={{boxShadow: 'inset 0 0 20px rgba(0, 255, 0, 0.1), 0 0 10px rgba(0, 255, 0, 0.3)'}}>
         <svg ref={svgRef} className="w-full h-full" />
       </div>
 
@@ -184,17 +187,17 @@ export default function SankeyView() {
   );
 }
 
-// Legend component
+// Legend component - War Games style
 function Legend() {
   return (
-    <div className="flex gap-4 text-xs">
+    <div className="flex gap-4 text-xs font-mono">
       {Object.entries(REGION_COLORS).map(([region, color]) => (
         <div key={region} className="flex items-center gap-1">
           <div
-            className="w-3 h-3 rounded"
-            style={{ backgroundColor: color }}
+            className="w-3 h-3"
+            style={{ backgroundColor: color, boxShadow: `0 0 5px ${color}` }}
           />
-          <span className="text-gray-400">{region}</span>
+          <span className="text-terminal-green uppercase tracking-wide">{region}</span>
         </div>
       ))}
     </div>
